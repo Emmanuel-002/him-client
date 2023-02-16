@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import '../styles/styles.css';
 
-const HeroSlider = () => {
+const Banner = () => {
   return (
     <main id="home_banner">
       <Carousel>
@@ -50,4 +50,4 @@ const HeroSlider = () => {
   );
 };
 
-export default HeroSlider;
+export default Banner;

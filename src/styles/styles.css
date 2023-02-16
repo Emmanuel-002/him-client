@@ -4,8 +4,11 @@ main#home_banner h3 {
 main#home_banner p {
   color: tomato;
 }
-main#home_banner img {
-  height: 40vw;
+.header {
+  z-index: 2;
+}
+.cardimage {
+  height: 300px;
 }
 .step1 {
   width: 33.3%;

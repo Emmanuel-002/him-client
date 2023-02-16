@@ -8,7 +8,12 @@ import '../styles/styles.css';
 
 const Header = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      variant="dark"
+      className="position-sticky top-0 header text-light bg-primary"
+    >
       <Container>
         <Navbar.Brand>
           <Link to={'/'} className="link">
@@ -24,16 +29,38 @@ const Header = () => {
                 Enrolment
               </Link>
             </Nav.Link>
-            <NavDropdown
-              title="Action"
-              id="collasible-nav-dropdown"
-              className="link"
-            >
-              <NavDropdown.Item href="#action/3.1">Statistics</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Referrer</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Encounter</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.4">
-                Population Data
+            <NavDropdown title="Action" id="collasible-nav-dropdown">
+              <NavDropdown.Item>
+                <Link
+                  to={'/statistics'}
+                  className="text-decoration-none text-dark"
+                >
+                  Statistics
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link
+                  to={'/population'}
+                  className="text-decoration-none text-dark"
+                >
+                  Population
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link
+                  to={'/referrer'}
+                  className="text-decoration-none text-dark"
+                >
+                  Referrer
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link
+                  to={'/encounter'}
+                  className="text-decoration-none text-dark"
+                >
+                  Encounter
+                </Link>
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

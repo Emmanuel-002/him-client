@@ -4,6 +4,12 @@ import './App.css';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Signup from './components/signup/Signup';
+import Cards from './components/Cards';
+import Footer from './components/Footer';
+import Statistics from './components/Statistics';
+import Population from './components/Population';
+import Referrer from './components/Referrer';
+import Encounter from './components/Encounter';
 
 function App() {
   return (
@@ -16,6 +22,8 @@ function App() {
               <Fragment>
                 <Header />
                 <Banner />
+                <Cards />
+                <Footer />
               </Fragment>
             }
           ></Route>
@@ -25,6 +33,42 @@ function App() {
               <Fragment>
                 <Header />
                 <Signup />
+              </Fragment>
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <Fragment>
+                <Header />
+                <Statistics />
+              </Fragment>
+            }
+          />
+          <Route
+            path="/population"
+            element={
+              <Fragment>
+                <Header />
+                <Population />
+              </Fragment>
+            }
+          />
+          <Route
+            path="/referrer"
+            element={
+              <Fragment>
+                <Header />
+                <Referrer />
+              </Fragment>
+            }
+          />
+          <Route
+            path="/encounter"
+            element={
+              <Fragment>
+                <Header />
+                <Encounter />
               </Fragment>
             }
           />
