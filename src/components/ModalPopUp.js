@@ -23,7 +23,7 @@ const ModalPopUp = (props) => {
         </p>
       </Modal.Body>
       <div className="modal_control">
-        <Button onClick={props.onHide}>Back</Button>
+        <Button onClick={props.onHide}>Cancel</Button>
         <Button onClick={props.onSubmit}>Submit</Button>
       </div>
     </Modal>

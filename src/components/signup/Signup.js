@@ -40,6 +40,7 @@ const Signup = () => {
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
   const [info, setInfo] = useState('');
+  const [title, setTitle] = useState('');
 
   const handleSubmit0 = (event) => {
     const form = event.currentTarget;
@@ -49,7 +50,6 @@ const Signup = () => {
     }
     if (
       titleRef.current.value !== '0' &&
-      serviceNumberRef.current.value &&
       personalFirstNameRef.current.value &&
       personalSurnameRef.current.value &&
       personalGenderRef.current.value !== '0' &&
@@ -62,6 +62,7 @@ const Signup = () => {
     ) {
       setPage((currPage) => currPage + 1);
     } else {
+      setTitle('Error');
       setInfo('Please fill all the required fields');
       setError(true);
     }
@@ -82,6 +83,7 @@ const Signup = () => {
     ) {
       setPage((currPage) => currPage + 1);
     } else {
+      setTitle('Error');
       setInfo('Please fill all the required fields');
       setError(true);
     }
@@ -95,6 +97,7 @@ const Signup = () => {
     }
     if (
       nextOfKinFirstNameRef.current.value &&
+      nextOfKinFirstNameRef.current.value &&
       nextOfKinSurnameRef.current.value &&
       nextOfKinAddressRef.current.value &&
       nextOfKinPhoneNumberRef.current.value &&
@@ -104,6 +107,7 @@ const Signup = () => {
     ) {
       setModal(true);
     } else {
+      setTitle('Error');
       setInfo('Please fill all the required fields');
       setError(true);
     }
@@ -154,7 +158,12 @@ const Signup = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Service Number</Form.Label>
-              <Form.Control required type="text" ref={serviceNumberRef} />
+              <Form.Control
+                required
+                type="text"
+                placeholder={'Optional'}
+                ref={serviceNumberRef}
+              />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>First Name</Form.Label>
@@ -164,7 +173,11 @@ const Signup = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Middle Name</Form.Label>
-              <Form.Control type="text" ref={personnalMiddleNameRef} />
+              <Form.Control
+                type="text"
+                placeholder={'Optional'}
+                ref={personnalMiddleNameRef}
+              />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Surname</Form.Label>
@@ -342,7 +355,11 @@ const Signup = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom20">
               <Form.Label>Middle Name</Form.Label>
-              <Form.Control type="text" ref={nextOfKinMiddleNameRef} />
+              <Form.Control
+                type="text"
+                placeholder={'Optional'}
+                ref={nextOfKinMiddleNameRef}
+              />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom21">
               <Form.Label>Surname</Form.Label>
@@ -380,11 +397,18 @@ const Signup = () => {
                 <option value="Son">Son</option>
                 <option value="Friend">Friend</option>
                 <option value="Guardian">Guardian</option>
+                <option value="Wife">Wife</option>
+                <option value="Husband">Husband</option>
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom26">
               <Form.Label>Gender</Form.Label>
-              <Form.Select required type="text" ref={nextOfKinGenderRef}>
+              <Form.Select
+                required
+                placeholder={'Required'}
+                type="text"
+                ref={nextOfKinGenderRef}
+              >
                 <option value="0"></option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -405,52 +429,117 @@ const Signup = () => {
         </Form>
         <ModalPopUp
           show={modal}
-          onSubmit={() => {
-            fetch('http://localhost:5000/signup')
-              .then((response) => response.json())
-              .then((data) => console.log(data))
-              .catch(() => {
+          onSubmit={async () => {
+            const patients = await fetch('http://localhost:5000/getpatients')
+              .then((res) => res.json())
+              .then((data) => data)
+              .catch((err) => {
+                setTitle('Error');
                 setInfo(
                   'Error connecting to server. Please ensure you are connected to the network'
                 );
                 setError(true);
+                setModal(false);
               });
-            setTimeout(() => {
-              setInfo('Connecting to server...');
-              setError(true);
-            });
-            console.log(
-              titleRef.current.value,
-              serviceNumberRef.current.value,
-              personalFirstNameRef.current.value,
-              personnalMiddleNameRef.current.value,
-              personalSurnameRef.current.value,
-              personalGenderRef.current.value,
-              dateOfBirthRef.current.value,
-              placeOfOriginRef.current.value,
-              tribeRef.current.value,
-              tradeRef.current.value,
-              maritalStatusRef.current.value,
-              religionRef.current.value,
-              personalPhoneNumberRef.current.value,
-              personalEmailRef.current.value,
-              personalCurrentAddressRef.current.value,
-              personalPermanentAddressRef.current.value,
-              unitRef.current.value,
-              nextOfKinFirstNameRef.current.value,
-              nextOfKinMiddleNameRef.current.value,
-              nextOfKinSurnameRef.current.value,
-              nextOfKinAddressRef.current.value,
-              nextOfKinPhoneNumberRef.current.value,
-              nextOfKinEmailRef.current.value,
-              relationshipRef.current.value,
-              nextOfKinGenderRef.current.value
+            let result = patients.find(
+              (patient) =>
+                String(patient.personalEmail) === personalEmailRef.current.value
             );
-            setModal(false);
+            console.log(result);
+            if (result) {
+              setTitle('Error');
+              setInfo('Email has been used');
+              setError(true);
+              setModal(false);
+            }
+            // start
+            else {
+              await fetch('http://localhost:5000/enrolment', {
+                headers: {
+                  'content-type': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                  title: titleRef.current.value,
+                  serviceNumber: serviceNumberRef.current.value,
+                  personalFirstName: personalFirstNameRef.current.value,
+                  personalMiddleName: personnalMiddleNameRef.current.value,
+                  personalSurname: personalSurnameRef.current.value,
+                  personalGender: personalGenderRef.current.value,
+                  dateOfBirth: dateOfBirthRef.current.value,
+                  placeOfOrigin: placeOfOriginRef.current.value,
+                  tribe: tribeRef.current.value,
+                  trade: tradeRef.current.value,
+                  maritalStatus: maritalStatusRef.current.value,
+                  religion: religionRef.current.value,
+                  personalPhoneNumber: personalPhoneNumberRef.current.value,
+                  personalEmail: personalEmailRef.current.value,
+                  personalCurrentAddress:
+                    personalCurrentAddressRef.current.value,
+                  personalPermanentAddress:
+                    personalPermanentAddressRef.current.value,
+                  unit: unitRef.current.value,
+                  nextOfKinFirstName: nextOfKinFirstNameRef.current.value,
+                  nextOfKinMiddleName: nextOfKinMiddleNameRef.current.value,
+                  nextOfKinSurname: nextOfKinSurnameRef.current.value,
+                  nextOfKinAddress: nextOfKinAddressRef.current.value,
+                  nextOfKinPhoneNumber: nextOfKinPhoneNumberRef.current.value,
+                  nextOfKinEmail: nextOfKinEmailRef.current.value,
+                  relationship: relationshipRef.current.value,
+                  nextOfKinGender: nextOfKinGenderRef.current.value,
+                }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  titleRef.current.value = '';
+                  serviceNumberRef.current.value = '';
+                  personalFirstNameRef.current.value = '';
+                  personnalMiddleNameRef.current.value = '';
+                  personalSurnameRef.current.value = '';
+                  personalGenderRef.current.value = '';
+                  dateOfBirthRef.current.value = '';
+                  placeOfOriginRef.current.value = '';
+                  tribeRef.current.value = '';
+                  tradeRef.current.value = '';
+                  maritalStatusRef.current.value = '';
+                  religionRef.current.value = '';
+                  personalPhoneNumberRef.current.value = '';
+                  personalEmailRef.current.value = '';
+                  personalCurrentAddressRef.current.value = '';
+                  personalPermanentAddressRef.current.value = '';
+                  unitRef.current.value = '';
+                  nextOfKinFirstNameRef.current.value = '';
+                  nextOfKinMiddleNameRef.current.value = '';
+                  nextOfKinSurnameRef.current.value = '';
+                  nextOfKinAddressRef.current.value = '';
+                  nextOfKinPhoneNumberRef.current.value = '';
+                  nextOfKinEmailRef.current.value = '';
+                  relationshipRef.current.value = '';
+                  nextOfKinGenderRef.current.value = '';
+                  setTitle('Success');
+                  setInfo('Patient has been enrolled');
+                  setError(true);
+                })
+                .catch((err) => {
+                  setTitle('Error');
+                  setInfo(
+                    'Error connecting to server. Please ensure you are connected to the network'
+                  );
+                  setError(true);
+                });
+
+              setModal(false);
+            }
           }}
+          // end
           onHide={() => setModal(false)}
         />
-        <ModalError show={error} onHide={() => setError(false)} info={info} />
+        <ModalError
+          show={error}
+          onHide={() => setError(false)}
+          info={info}
+          title={title}
+        />
       </Fragment>
     );
   };

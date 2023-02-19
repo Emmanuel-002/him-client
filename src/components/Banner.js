@@ -1,10 +1,10 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Container } from 'react-bootstrap';
 import '../styles/styles.css';
 
 const Banner = () => {
   return (
-    <main id="home_banner">
+    <Container className="mt-2" id="home_banner">
       <Carousel>
         <Carousel.Item interval={2000}>
           <img
@@ -46,7 +46,7 @@ const Banner = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-    </main>
+    </Container>
   );
 };
 

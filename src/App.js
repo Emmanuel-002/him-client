@@ -10,6 +10,8 @@ import Statistics from './components/Statistics';
 import Population from './components/Population';
 import Referrer from './components/Referrer';
 import Encounter from './components/Encounter';
+import Patients from './components/Patients';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -69,6 +71,15 @@ function App() {
               <Fragment>
                 <Header />
                 <Encounter />
+              </Fragment>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Fragment>
+                <Header />
+                <Admin />
               </Fragment>
             }
           />

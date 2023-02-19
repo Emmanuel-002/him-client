@@ -1,11 +1,18 @@
-main#home_banner h3 {
+#home_banner h3 {
   color: red;
 }
-main#home_banner p {
+#home_banner p {
   color: tomato;
+}
+#home_banner img {
+  height: 60vh;
 }
 .header {
   z-index: 2;
+}
+.link img {
+  width: 40px;
+  height: 30px;
 }
 .cardimage {
   height: 300px;
@@ -35,6 +42,7 @@ main#home_banner p {
 .form_container h1 {
   margin: 1rem auto;
   text-align: center;
+  color: blue;
 }
 .form_control {
   display: flex;
@@ -44,10 +52,6 @@ main#home_banner p {
   display: flex;
   justify-content: space-between;
   margin: 1rem;
-}
-
-.form_container h1 {
-  color: blue;
 }
 .hide {
   display: none;
@@ -65,6 +69,6 @@ main#home_banner p {
 
 @media all and (max-width: 600px) {
   main#home_banner img {
-    height: 70vh;
+    height: 50vh;
   }
 }
