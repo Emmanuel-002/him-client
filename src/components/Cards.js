@@ -12,7 +12,7 @@ const Cards = () => {
           <Card className="mt-3 border-0">
             <Link
               to={'/statistics'}
-              className="text-light text-decoration-none bg-light p-0"
+              className="text-dark text-decoration-none bg-light p-0"
             >
               <Card.Img
                 variant="top"
@@ -28,7 +28,7 @@ const Cards = () => {
           <Card className="mt-3 border-0 bg-light">
             <Link
               to={'/population'}
-              className="text-light text-decoration-none bg-light p-0"
+              className="text-dark text-decoration-none bg-light p-0"
             >
               <Card.Img
                 variant="top"
@@ -46,7 +46,7 @@ const Cards = () => {
           <Card className="m-3 border-0 bg-light">
             <Link
               to={'/referrer'}
-              className="text-light text-decoration-none bg-light p-0"
+              className="text-dark text-decoration-none bg-light p-0"
             >
               <Card.Img
                 variant="top"
@@ -62,7 +62,7 @@ const Cards = () => {
           <Card className="m-3 border-0 bg-light">
             <Link
               to={'/encounter'}
-              className="text-light text-decoration-none bg-light p-0"
+              className="text-dark text-decoration-none bg-light p-0"
             >
               <Card.Img
                 variant="top"

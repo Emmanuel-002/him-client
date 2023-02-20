@@ -6,10 +6,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import '../styles/styles.css';
-// import ModalSearch from './ModalSearch';
+import Signin from './authentication/Signin';
+import Signup from './authentication/Signup';
 
 const Header = () => {
-  // const [show, setShow] = useState(false);
+  const [signup, setSignup] = useState(false);
+  const [signin, setSignin] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   return (
     <Fragment>
       <Navbar
@@ -33,6 +37,28 @@ const Header = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto"></Nav>
             <Nav>
+              <NavLink>
+                <Link
+                  to={'/'}
+                  className="link"
+                  onClick={() => {
+                    setSignin(true);
+                  }}
+                >
+                  Sign in
+                </Link>
+              </NavLink>
+              <NavLink>
+                <Link
+                  to={'/'}
+                  className="link"
+                  onClick={() => {
+                    setSignup(true);
+                  }}
+                >
+                  Sign up
+                </Link>
+              </NavLink>
               <NavLink>
                 <Link
                   to={'/admin'}
@@ -87,13 +113,13 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* <ModalSearch
-        show={show}
-        onHide={() => {
-          setShow(false);
-        }}
-        Info={''}
-      /> */}
+      <Signup
+        show={signup}
+        onHide={() => setSignup(false)}
+        error={error}
+        success={success}
+      />
+      <Signin show={signin} onHide={() => setSignin(false)} error={error} />
     </Fragment>
   );
 };

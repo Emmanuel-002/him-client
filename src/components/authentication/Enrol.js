@@ -8,7 +8,7 @@ import '../../styles/styles.css';
 import ModalPopUp from '../ModalPopUp';
 import ModalError from '../ModalError';
 
-const Signup = () => {
+const Enrol = () => {
   let titleRef = createRef();
   let serviceNumberRef = createRef();
   let personalFirstNameRef = createRef();
@@ -550,4 +550,4 @@ const Signup = () => {
     </Container>
   );
 };
-export default Signup;
+export default Enrol;
